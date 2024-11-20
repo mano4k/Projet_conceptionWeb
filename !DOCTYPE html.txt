@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Globe Interactif</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>Explorez le Monde</h1>
+  </header>
+  <main>
+    <div id="globe-container"></div>
+    <div id="info-panel">
+      <h2>Ville sélectionnée : <span id="city-name">Aucune</span></h2>
+      <ul id="tourist-spots">
+        <!-- Zones touristiques ajoutées dynamiquement -->
+      </ul>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/cities.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
