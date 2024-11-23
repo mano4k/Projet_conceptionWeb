@@ -1,0 +1,54 @@
+<head>
+  <style> body { margin: 0; } </style>
+
+  <script src="//unpkg.com/globe.gl"></script>
+
+  <!--  <script src="../../dist/globe.gl.js"></script>-->
+
+  <script src="./javascript/country.js"></script>
+
+
+</head>
+
+<body>
+<div id="globeViz"></div>
+
+
+<script>
+  setupCountries()
+
+  fetch('../datasets/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
+  {
+    const world = Globe()
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+            .hexPolygonsData(countries.features)
+            .hexPolygonResolution(3)
+            .hexPolygonMargin(0.3)
+            .hexPolygonUseDots(true)
+            /*.hexPolygonLabel((s) => {
+            })*/
+            .onHexPolygonClick(({ properties: d }, polygon, event, coords) => {
+              getCountryDetails(d.ADMIN).then(country => {
+                      let capital = country.capital[0]
+                      let coords = country.capitalInfo.latlng
+
+                console.log(capital+" at "+coords[0]+","+coords[1])
+                      openStreeViewAtCapital(capital)
+
+                      }
+              ).catch((e) => console.log(e.error))
+            })
+            .onHexPolygonHover((polygon, prevPolygon) => {
+              //console.log("hover at ")
+            })
+            .hexPolygonColor(() => `#${Math.round(Math.random() * Math.pow(2, 24)).toString(16).padStart(6, '0')}`)
+            .hexPolygonLabel(({ properties: d }) => `
+          <b>${d.ADMIN} (${d.ISO_A2})</b> <br />
+          Population: <i>${d.POP_EST}</i>
+        `)
+            (document.getElementById('globeViz'))
+  });
+
+
+</script>
+</body>
